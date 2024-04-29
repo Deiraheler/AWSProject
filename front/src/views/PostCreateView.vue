@@ -60,7 +60,7 @@ async function uploadToS3() {
       uploadPromises.push(upload.promise());
     }
 
-    Promise.all(uploadPromises).then(function(data) {
+    await Promise.all(uploadPromises).then(function(data) {
       console.log('Successfully uploaded files:', data);
       fileS3Url.value = data[0].Location;
       console.log('File URL:', fileS3Url.value);
@@ -91,6 +91,7 @@ const createPost = async () => {
 
   try {
     const postData = { title: title.value, content: content.value, imageUrl: fileS3Url.value };
+    console.log(postData);
     await axios.post('https://3xwoe7u9h2.execute-api.eu-west-1.amazonaws.com/', postData, {
       headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     });
@@ -144,7 +145,7 @@ const handleFileChange = event => {
   }
 
   .post-form{
-    width: 300px;
+    max-width: 450px;
     margin: 20px auto;
   }
   form {

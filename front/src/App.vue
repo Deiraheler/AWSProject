@@ -5,7 +5,6 @@
       <nav>
         <router-link to="/">Blog</router-link>
         <router-link v-if="isUserLoggedIn" to="/post">Post</router-link>
-        <router-link v-if="isUserLoggedIn" to="/profile">Profile</router-link>
         <router-link v-if="!isUserLoggedIn" to="/signin">Sign In</router-link>
         <a v-else class="button-logout" @click="logout">Sign Out</a>
       </nav>
@@ -105,5 +104,31 @@ button{
 
 button:hover{
   background-color: #006bff;
+}
+
+.credentials{
+  display: flex;
+  justify-content: space-between;
+}
+
+.credentials p{
+  font-size: 12px;
+}
+
+div > h1{
+  padding: 5px 20px;
+  margin-bottom: 20px;
+  background-color: #333333;
+  color: white;
+  border-radius: 5px;
+  display: inline-block;
+  width: max-content;
+}
+
+footer{
+  background-color: #333333;
+  color: white;
+  text-align: center;
+  padding: 10px;
 }
 </style>
