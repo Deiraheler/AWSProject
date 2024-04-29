@@ -3,12 +3,15 @@
     <header class="container">
       <h1>Keyboard Warriors Blog</h1>
       <nav>
-        <router-link to="/">Home</router-link>
-        <router-link to="/signin">Sign In</router-link>
+        <router-link to="/">Blog</router-link>
+        <router-link v-if="isUserLoggedIn" to="/post">Post</router-link>
+        <router-link v-if="isUserLoggedIn" to="/profile">Profile</router-link>
+        <router-link v-if="!isUserLoggedIn" to="/signin">Sign In</router-link>
+        <a v-else class="button-logout" @click="logout">Sign Out</a>
       </nav>
     </header>
 
-    <main>
+    <main class="container">
       <router-view/>
     </main>
 
@@ -19,8 +22,25 @@
 </template>
 
 <script>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+
 export default {
-  name: 'App'
+  name: 'App',
+  setup() {
+    const store = useStore();
+
+    const isUserLoggedIn = computed(() => store.state.userLogin);
+
+    const logout = () => {
+      store.dispatch('removeUserLogin');
+    };
+
+    return {
+      isUserLoggedIn,
+      logout
+    };
+  }
 }
 </script>
 
@@ -45,6 +65,14 @@ nav > a{
   margin-left: 15px;
 }
 
+.button-logout{
+  background-color: #333333;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 body{
   font-family: Arial, sans-serif;
   background-color: #BDE4F4;
@@ -64,5 +92,18 @@ header.container{
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+button{
+  padding: 5px 10px;
+  background-color: #1663cf;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover{
+  background-color: #006bff;
 }
 </style>
